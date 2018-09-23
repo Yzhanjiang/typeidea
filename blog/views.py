@@ -6,7 +6,35 @@ from  django.core.paginator import  Paginator,EmptyPage
 from django.db import connection
 # Create your views here.
 from django.http import HttpResponse, Http404
-from .models import Post,Tag
+from .models import Post,Tag,Category
+from  config.models import SideBar
+from  comment.models import Comment
+
+def get_common_context():
+    categories = Category.objects.filter(status=1)
+    nav_cates = []
+    cates = []
+    for cate in categories:
+        if cate.is_nav:
+            nav_cates.append(cate)
+        else:
+            cates.append(cate)
+
+    side_bars = SideBar.objects.filter(status=1)
+
+    recently_posts = Post.objects.filter(status=1)[:10]
+    # hot_posts = Post.objects.filter(status=1).order_by('views')
+    recently_comments = Comment.objects.filter(status=1)[:10]
+
+    print(connection.queries)
+    context = {
+            'nav_cates': nav_cates,
+            'cates': cates,
+            'side_bars': side_bars,
+            'recently_posts': recently_posts,
+            'recently_comments': recently_comments,
+        }
+    return context
 
 def post_list(request,category_id=None,tag_id=None):
     queryset = Post.objects.all()
@@ -34,14 +62,34 @@ def post_list(request,category_id=None,tag_id=None):
         posts = paginator.page(page)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-    print(len(posts))
-    print(connection.queries)
+
+    # categories = Category.objects.filter(status=1)
+    # nav_cates = []
+    # cates = []
+    # for cate in categories:
+    #     if cate.is_nav:
+    #         nav_cates.append(cate)
+    #     else:
+    #         cates.append(cate)
+    #
+    # side_bars = SideBar.objects.filter(status=1)
+    #
+    # recently_posts = Post.objects.filter(status=1)[:10]
+    # # hot_posts = Post.objects.filter(status=1).order_by('views')
+    # recently_comments = Comment.objects.filter(status=1)[:10]
+    #
+    # print(len(posts))
+    # print(connection.queries)
+
     context = {
         'posts':posts,
     }
-    # return  HttpResponse('test')
 
+    common_context = get_common_context()
+    context.update(common_context)
     return render(request,'blog/list.html',context=context)
+
+
 
 def post_detail(request,pk=None):
     try:
@@ -49,9 +97,10 @@ def post_detail(request,pk=None):
     except Post.DoesNotExist:
         raise Http404("post does not exist")
 
-
-
     context = {
-        'post':post,
+        'post': post,
     }
+    common_context = get_common_context()
+    context.update(common_context)
+
     return render(request, 'blog/detail.html', context=context)
