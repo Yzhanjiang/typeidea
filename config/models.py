@@ -21,6 +21,9 @@ class Link(models.Model):
     owner = models.ForeignKey(User, verbose_name="作者")
     created_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
 
+    def __unicode__(self):
+        return self.title
+
     class Meta:
         verbose_name = verbose_name_plural = '友链'
 
@@ -44,6 +47,9 @@ class SideBar(models.Model):
 
     owner = models.ForeignKey(User, verbose_name="作者")
     created_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+
+    def __unicode__(self):
+        return self.title
 
     class Meta:
         verbose_name = verbose_name_plural = "侧边栏"
