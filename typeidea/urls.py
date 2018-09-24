@@ -19,16 +19,22 @@ from django.contrib import admin
 from  custom_site import custom_site
 
 
-from blog.views import  post_list,post_detail
+from blog.views import  post_list,post_detail,IndexView,CategoryView,TagView,PostView
+
 from config.views import links
 
 urlpatterns = [
-    url(r'^$',post_list,name="index"),
-    url(r'category/(?P<category_id>\d+)/$',post_list,name="category"),
-    url(r'^tag/(?P<tag_id>\d+)/$',post_list,name="tag"),
-    url(r'^post/(?P<pk>\d+)/$',post_detail,name="detail"),
+    # url(r'^$',post_list,name="index"),
+    # url(r'category/(?P<category_id>\d+)/$',post_list,name="category"),
+    # url(r'^tag/(?P<tag_id>\d+)/$',post_list,name="tag"),
+    # url(r'^post/(?P<pk>\d+)/$',post_detail,name="detail"),
     url(r'^links/$',links),
-
     url(r'^admin/', admin.site.urls),
-    # url(r'^custom_site/',custom_site.urls ),
+
+    #CBV
+    url(r'^$',IndexView.as_view(),name="index"),
+    url(r'category/(?P<category_id>\d+)/$',CategoryView.as_view(),name="category"),
+    url(r'^tag/(?P<tag_id>\d+)/$',TagView.as_view(),name="tag"),
+    url(r'^post/(?P<pk>\d+)/$',PostView.as_view(),name="detail"),
+
 ]
