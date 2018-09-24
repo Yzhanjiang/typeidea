@@ -6,7 +6,7 @@ from  django.core.paginator import  Paginator,EmptyPage
 from django.db import connection
 from django.http import HttpResponse, Http404
 from  django.views.generic import ListView,DetailView
-
+from  django.conf import  settings
 
 # Create your views here.
 
@@ -17,7 +17,7 @@ from  comment.models import Comment
 
 #CBV
 
-class CommonMixin:
+class CommonMixin(object):
     def get_category_context(self):
         categories = Category.objects.filter(status=1)
         nav_cates = []
@@ -56,7 +56,7 @@ class CommonMixin:
 
 class BasePostsView(CommonMixin,ListView):
     model = Post
-    template_name = 'blog/list.html'
+    template_name = settings.THEME + '/blog/list.html'
     context_object_name =  'posts'
     paginate_by = 3
     allow_empty = True
@@ -89,7 +89,7 @@ class TagView(BasePostsView):
 
 class PostView(CommonMixin,DetailView):
     model = Post
-    template_name = 'blog/detail.html'
+    template_name = settings.THEME + '/blog/detail.html'
     context_object_name = 'post'
     print(context_object_name)
 

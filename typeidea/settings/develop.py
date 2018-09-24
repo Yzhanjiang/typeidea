@@ -25,6 +25,8 @@ DATABASES = {
 # print(BASE_DIR)
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_files/')
 
+THEME = 'themes/default'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
