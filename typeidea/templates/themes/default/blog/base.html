@@ -15,15 +15,35 @@
 <body>
 <header class="fixed-top">
     <div class="container">
-        <nav class="nav ">
-            <a class="logo" href="/">Typeidea</a>
-            <a class="index" href="/">首页</a>
-            {% for cate in cates %}
-                <a class="link" href="{% url 'category' cate.id %}"> {{ cate.name }}</a>
-            {% endfor %}
-        </nav>
+        <div class="row">
+            <div class="col-9">
+                <nav class="nav ">
+                    <a class="logo" href="/">Typeidea</a>
+                    <a class="index" href="/">首页</a>
+                    {% for cate in cates %}
+                        <a class="link" href="{% url 'category' cate.id %}"> {{ cate.name }}</a>
+                    {% endfor %}
+                </nav>
+            </div>
+
+            <div class="col-3">
+                <div >
+                    <form action="/" method="GET" class="input-group search">
+                        <input type="text" name="query" class="form-control header-input" placeholder="search">
+                        <span class="input-group-btn">
+                        <input type="submit" class="btn btn-secondary header-btn" value="Go!"></input>
+                    </span>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
     </div>
 </header>
+
+
+
 
 {#<div class="container banner">#}
 {#    <h3>#}
@@ -41,6 +61,9 @@
                 {% endblock %}
             </div>
         </div>
+
+
+
 
         <div class="col-3 right-side">
             <div class="inner">
