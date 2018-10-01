@@ -8,9 +8,9 @@ from  .models import Post,Category,Tag
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title','desc','content','status','owner','created_time']
+    list_display = ['title','desc','content','status_show','owner','created_time','pv','uv']
     list_display_links = []
-    list_filter = ['category','owner']
+    list_filter = ['category','title']
     # fields = ('name',)
     search_fields = ['title','category_name','owner_username']
     save_on_top = True
@@ -20,6 +20,18 @@ class PostAdmin(admin.ModelAdmin):
     # date_hierarchy = 'created_time'
     # list_editable = ('title',)
     # exclude = ['owner']
+
+    fields = (
+        ('category','title'),
+        'desc',
+        'status',
+        ('content', 'is_markdown'),
+        'html',
+        'tag',
+        'owner',
+    )
+
+
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name','status','is_nav','owner','created_time']

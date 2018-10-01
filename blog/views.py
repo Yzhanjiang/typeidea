@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.db.models import F
 from django.shortcuts import render
 from  django.core.paginator import  Paginator,EmptyPage
 from django.db import connection
@@ -39,7 +40,7 @@ class CommonMixin(object):
     def get_context_data(self,**kwargs):
         # side_bars = SideBar.objects.filter(status=1)
         recently_posts = Post.objects.filter(status=1)[:10]
-        # hot_posts = Post.objects.filter(status=1).order_by('views')
+        hot_posts = Post.objects.filter(status=1).order_by('pv')[:10]
         recently_comments = Comment.objects.filter(status=1)[:10]
 
         # print(connection.queries)
@@ -47,6 +48,7 @@ class CommonMixin(object):
             'side_bars': self.get_side_bars(),
             'recently_posts': recently_posts,
             'recently_comments': recently_comments,
+            'hot_posts':hot_posts,
         })
         # context.update(extra_context)
         # return context
@@ -116,6 +118,18 @@ class PostView(CommonMixin,CommentShowMixin,DetailView):
     template_name = settings.THEME + '/blog/detail.html'
     context_object_name = 'post'
     print(context_object_name)
+
+    def get(self,request,*args,**kwargs):
+        response = super(PostView, self).get(request, *args, **kwargs)
+        # post_id = self.kwargs.get('pk')
+        self.pv_uv()
+        return  response
+
+    def pv_uv(self):
+        self.object.increase_pv()
+        self.object.increase_uv()
+
+        self.object.save()
 
 
 

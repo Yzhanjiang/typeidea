@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'config',
     'comment',
 
+    'markdown',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

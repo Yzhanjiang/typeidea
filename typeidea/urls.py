@@ -14,7 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from  custom_site import custom_site
 
@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^links/$',LinkView.as_view(),name='links'),
     url(r'^comment/$',CommentView.as_view(),name='comment'),
     url(r'^admin/', admin.site.urls),
+    # url('^markdown/', include('markdown.urls')),
 
     #CBV
     url(r'^$',IndexView.as_view(),name="index"),
