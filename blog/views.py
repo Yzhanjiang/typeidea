@@ -9,7 +9,7 @@ from  django.views.generic import ListView,DetailView
 from  django.conf import  settings
 
 # Create your views here.
-
+from comment.views import CommentShowMixin
 from .models import Post,Tag,Category
 from  config.models import SideBar
 from  comment.models import Comment
@@ -111,19 +111,11 @@ class AuthorView(BasePostsView):
 
 
 
-
-
-class PostView(CommonMixin,DetailView):
+class PostView(CommonMixin,CommentShowMixin,DetailView):
     model = Post
     template_name = settings.THEME + '/blog/detail.html'
     context_object_name = 'post'
     print(context_object_name)
-
-    def  get_context_data(self,**kwargs):
-        kwargs.update({
-            'comment_form': CommentForm(),
-        })
-        return super(PostView,self).get_context_data(**kwargs)
 
 
 

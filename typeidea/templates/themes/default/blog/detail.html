@@ -29,18 +29,9 @@
         <article class="content">
             {{ post.content }}
         </article>
-        <hr>
-        <div class="comment">
-            <form action="/comment/" method="post">
-                {% csrf_token %}
-                {{ comment_form }}
-                <input name="target" value="{{ request.path }}">
-
-                <input type="submit" value="提交!">
-            </form>
-        </div>
 
 
+        {% include '../comment/block.html' %}
     </div>
 
 

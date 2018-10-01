@@ -123,3 +123,9 @@ nav.category a {
 .sidebar-content {
     padding: 0 9px;
 }
+
+/* 评论相关 */
+.comment .nickname a {
+    font-size: 2rem;
+    color: #222222;
+}
