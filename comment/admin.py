@@ -8,6 +8,6 @@ from django.contrib import admin
 from  .models import Comment
 
 class CommentAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['target','nickname','content','website','created_time']
 
 admin.site.register(Comment,CommentAdmin)

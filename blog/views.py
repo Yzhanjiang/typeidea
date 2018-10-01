@@ -14,6 +14,7 @@ from .models import Post,Tag,Category
 from  config.models import SideBar
 from  comment.models import Comment
 
+from comment.forms import CommentForm
 
 #CBV
 
@@ -118,7 +119,11 @@ class PostView(CommonMixin,DetailView):
     context_object_name = 'post'
     print(context_object_name)
 
-
+    def  get_context_data(self,**kwargs):
+        kwargs.update({
+            'comment_form': CommentForm(),
+        })
+        return super(PostView,self).get_context_data(**kwargs)
 
 
 

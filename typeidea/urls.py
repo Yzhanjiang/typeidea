@@ -22,6 +22,7 @@ from  custom_site import custom_site
 from blog.views import  post_list,post_detail,IndexView,CategoryView,TagView,PostView,AuthorView
 
 from config.views import LinkView
+from  comment.views import CommentView
 
 urlpatterns = [
     # url(r'^$',post_list,name="index"),
@@ -29,6 +30,7 @@ urlpatterns = [
     # url(r'^tag/(?P<tag_id>\d+)/$',post_list,name="tag"),
     # url(r'^post/(?P<pk>\d+)/$',post_detail,name="detail"),
     url(r'^links/$',LinkView.as_view(),name='links'),
+    url(r'^comment/$',CommentView.as_view(),name='comment'),
     url(r'^admin/', admin.site.urls),
 
     #CBV
