@@ -8,7 +8,7 @@ from  .models import Post,Category,Tag
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title','desc','content','status','created_time']
+    list_display = ['title','desc','content','status','owner','created_time']
     list_display_links = []
     list_filter = ['category','owner']
     # fields = ('name',)
@@ -19,7 +19,7 @@ class PostAdmin(admin.ModelAdmin):
     # actions_on_bottom = True
     # date_hierarchy = 'created_time'
     # list_editable = ('title',)
-    exclude = ['owner']
+    # exclude = ['owner']
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name','status','is_nav','owner','created_time']

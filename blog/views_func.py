@@ -13,8 +13,6 @@ from  comment.models import Comment
 
 
 
-
-
 def get_common_context():
     categories = Category.objects.filter(status=1)
     nav_cates = []

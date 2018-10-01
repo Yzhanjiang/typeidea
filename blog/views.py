@@ -35,21 +35,24 @@ class CommonMixin(object):
     def get_side_bars(self):
         return SideBar.objects.filter(status=1)
 
-    def get_context_data(self,*args,**kwargs):
-        side_bars = SideBar.objects.filter(status=1)
+    def get_context_data(self,**kwargs):
+        # side_bars = SideBar.objects.filter(status=1)
         recently_posts = Post.objects.filter(status=1)[:10]
         # hot_posts = Post.objects.filter(status=1).order_by('views')
         recently_comments = Comment.objects.filter(status=1)[:10]
 
-        print(connection.queries)
-        kwargs = {
-            'side_bars': side_bars,
+        # print(connection.queries)
+        kwargs.update({
+            'side_bars': self.get_side_bars(),
             'recently_posts': recently_posts,
             'recently_comments': recently_comments,
-        }
+        })
         # context.update(extra_context)
         # return context
+
         kwargs.update(self.get_category_context())
+
+        print("222222222222")
         print(kwargs)
         return  super(CommonMixin,self).get_context_data(**kwargs)
 
@@ -58,14 +61,25 @@ class BasePostsView(CommonMixin,ListView):
     model = Post
     template_name = settings.THEME + '/blog/list.html'
     context_object_name =  'posts'
-    paginate_by = 3
+    paginate_by = 2
     allow_empty = True
 
 
 class IndexView(BasePostsView):
-    # def get(self,requset,*args,**kwargs):
-        pass
+    def get_queryset(self):
+        # print(self.template_name)
+        query = self.request.GET.get('query')
+        print("query:{0}".format(query))
+        qs = super(IndexView,self).get_queryset()
+        if  query:
+            qs = qs.filter(title__icontains=query)
+        print(qs)
+        return qs
 
+    def get_context_data(self,**kwargs):
+        # print(self.template_name)
+        query = self.request.GET.get('query')
+        return super(IndexView,self).get_context_data(query=query)
 
 class CategoryView(BasePostsView):
     def get_queryset(self):
@@ -85,6 +99,17 @@ class TagView(BasePostsView):
 
         posts =  tag.posts.all()
         return posts
+
+class AuthorView(BasePostsView):
+    def get_queryset(self):
+        author_id = self.kwargs.get('author_id')
+        qs = super(AuthorView,self).get_queryset()
+        if author_id:
+            qs = qs.filter(owner_id= author_id)
+        return qs
+
+
+
 
 
 class PostView(CommonMixin,DetailView):
