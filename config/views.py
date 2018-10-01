@@ -5,6 +5,21 @@ from django.shortcuts import render
 from  django.http import HttpResponse
 # Create your views here.
 
-def links(request):
+from  django.views.generic import ListView
+from blog.views import CommonMixin
+from  django.conf import  settings
+from  .models import Link
 
-    return HttpResponse('links')
+class LinkView(CommonMixin,ListView):
+    model = Link
+    template_name = settings.THEME + '/config/links.html'
+    context_object_name = 'links'
+    allow_empty = True
+    queryset = Link.objects.filter(status=1)
+
+
+
+
+
+
+

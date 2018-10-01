@@ -21,14 +21,14 @@ from  custom_site import custom_site
 
 from blog.views import  post_list,post_detail,IndexView,CategoryView,TagView,PostView,AuthorView
 
-from config.views import links
+from config.views import LinkView
 
 urlpatterns = [
     # url(r'^$',post_list,name="index"),
     # url(r'category/(?P<category_id>\d+)/$',post_list,name="category"),
     # url(r'^tag/(?P<tag_id>\d+)/$',post_list,name="tag"),
     # url(r'^post/(?P<pk>\d+)/$',post_detail,name="detail"),
-    url(r'^links/$',links),
+    url(r'^links/$',LinkView.as_view(),name='links'),
     url(r'^admin/', admin.site.urls),
 
     #CBV
