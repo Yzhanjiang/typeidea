@@ -18,6 +18,13 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from  custom_site import custom_site
 
+import  xadmin
+xadmin.autodiscover()
+# from xadmin.plugins import xversion
+# xversion.register_models()
+
+# import captcha
+
 
 from blog.views import  post_list,post_detail,IndexView,CategoryView,TagView,PostView,AuthorView
 
@@ -31,7 +38,8 @@ urlpatterns = [
     # url(r'^post/(?P<pk>\d+)/$',post_detail,name="detail"),
     url(r'^links/$',LinkView.as_view(),name='links'),
     url(r'^comment/$',CommentView.as_view(),name='comment'),
-    url(r'^admin/', admin.site.urls),
+    # url(r'^admin/', admin.site.urls),
+    url(r'^admin/', xadmin.site.urls),
     # url('^markdown/', include('markdown.urls')),
 
     #CBV
