@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     # 'captcha',
 
+    'DjangoUeditor',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -138,12 +140,21 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 print(STATIC_URL)
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static'),
-]
+# 公共的 static 文件，比如 jquery.js 可以放这里，这里面的文件夹不能包含 STATIC_ROOT
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "common_static"),
+)
 print(STATICFILES_DIRS)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# upload folder
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+print(MEDIA_URL)
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_files/')
+
+
 
 # XADMIN_TITLE = "Typeidea管理后台"
 # XADMIN_FOOTER_TITLE = "@ power by zhan"
+
+

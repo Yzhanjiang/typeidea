@@ -8,10 +8,12 @@ import xadmin
 from .models import Link,SideBar
 
 class LinkAdmin(object):
-    pass
+    style_fields = {"content": "ueditor"}
+
 
 class SideBarAdmin(object):
-    pass
+    style_fields = {"content": "ueditor"}
+
 
 xadmin.site.register(Link,LinkAdmin)
 xadmin.site.register(SideBar,SideBarAdmin)

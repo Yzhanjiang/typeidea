@@ -5,6 +5,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import  markdown
 
+from DjangoUeditor.models import UEditorField
+
 # Create your models here.
 from django.db.models import F
 
@@ -54,7 +56,10 @@ class Post(models.Model):
     )
     title = models.CharField(max_length=255,verbose_name="标题")
     desc = models.CharField(max_length=1024,blank=True,verbose_name="摘要")
-    content = models.TextField(verbose_name="正文",help_text="正文必须为MarkDown格式")
+    # content = models.TextField(verbose_name="正文",help_text="正文必须为MarkDown格式")
+    content = UEditorField('内容', height=300, width=1000,
+                           default=u'', blank=True, imagePath="uploads/images/",
+                           toolbars='besttome', filePath='uploads/files/')
     # content = models.TextField(verbose_name="正文",help_text="正文必须为MarkDown格式")
     html = models.TextField(verbose_name="渲染后的内容",null=True,help_text="正文必须为MarkDown格式")
     is_markdown = models.BooleanField(verbose_name='使用markdown',default=True)

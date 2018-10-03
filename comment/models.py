@@ -8,6 +8,8 @@ from blog.models import Post
 
 from django.db import models
 
+from DjangoUeditor.models import UEditorField
+
 
 class Comment(models.Model):
     STATUS_NORMAL = 1
@@ -18,7 +20,11 @@ class Comment(models.Model):
     )
     # post = models.ForeignKey(Post,verbose_name="文章")
     target = models.CharField(max_length=100, verbose_name="评论目标")
-    content = models.CharField(max_length=2000, verbose_name="内容")
+
+    content = UEditorField('内容', height=300, width=1000,
+                           default=u'', blank=True, imagePath="uploads/images/",
+                           toolbars='besttome', filePath='uploads/files/')
+    # content = models.CharField(max_length=2000, verbose_name="内容")
     nickname = models.CharField(max_length=50, verbose_name="昵称")
     website = models.URLField(verbose_name="网站")
     email = models.EmailField(verbose_name="邮箱")
@@ -33,3 +39,15 @@ class Comment(models.Model):
     @classmethod
     def get_by_target(cls, target):
         return cls.objects.filter(target=target, status=cls.STATUS_NORMAL)
+
+class CommentTest(models.Model):
+    Name = models.CharField(max_length=100,blank=True,verbose_name="测试")
+    content = UEditorField('内容', height=300, width=1000,
+                           default=u'', blank=True, imagePath="uploads/images/",
+                           toolbars='besttome', filePath='uploads/files/')
+
+    def __unicode__(self):
+        return self.Name
+
+    class Meta:
+        verbose_name = verbose_name_plural = "测试"

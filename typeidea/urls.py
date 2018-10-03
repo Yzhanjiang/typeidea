@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url, include
 from django.contrib import admin
 from  custom_site import custom_site
@@ -22,6 +23,10 @@ import  xadmin
 xadmin.autodiscover()
 # from xadmin.plugins import xversion
 # xversion.register_models()
+
+from DjangoUeditor import urls as DjangoUeditor_urls
+from django.conf.urls.static import static
+
 
 # import captcha
 
@@ -40,7 +45,12 @@ urlpatterns = [
     url(r'^comment/$',CommentView.as_view(),name='comment'),
     # url(r'^admin/', admin.site.urls),
     url(r'^admin/', xadmin.site.urls),
+    url(r'^ueditor/',include('DjangoUeditor.urls')),
+    # url(r'^ueditor/', include(DjangoUeditor_urls)),
     # url('^markdown/', include('markdown.urls')),
+
+    # static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
+    # static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 
     #CBV
     url(r'^$',IndexView.as_view(),name="index"),
@@ -50,3 +60,9 @@ urlpatterns = [
     url(r'^author/(?P<author_id>\d+)/$',AuthorView.as_view(),name="author"),
 
 ]
+
+#medis
+urlpatterns += (
+        static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) +
+        static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    )

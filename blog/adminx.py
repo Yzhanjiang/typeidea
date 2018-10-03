@@ -10,6 +10,7 @@ from xadmin.layout import Fieldset, Row
 from  typeidea.adminx import BaseOwnerAdmin
 
 class PostAdmin(object):
+    style_fields = {"content": "ueditor"}
     list_display = ['title','desc','content','status_show','owner','created_time','pv','uv']
     list_display_links = []
     list_filter = ['category','title']
@@ -21,7 +22,7 @@ class PostAdmin(object):
     # actions_on_bottom = True
     # date_hierarchy = 'created_time'
     # list_editable = ('title',)
-    exclude = ['owner','html','pv','uv']
+    exclude = ['html','pv','uv']
 
     # fields = (
     #     ('category','title'),
@@ -40,6 +41,7 @@ class PostAdmin(object):
             Row('category', 'status', 'is_markdown'),
             'content',
             'tag',
+            'owner',
         ),
     )
 
