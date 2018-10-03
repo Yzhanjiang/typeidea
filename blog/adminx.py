@@ -9,6 +9,9 @@ import xadmin
 from xadmin.layout import Fieldset, Row
 from  typeidea.adminx import BaseOwnerAdmin
 
+
+
+
 class PostAdmin(object):
     style_fields = {"content": "ueditor"}
     list_display = ['title','desc','content','status_show','owner','created_time','pv','uv']
